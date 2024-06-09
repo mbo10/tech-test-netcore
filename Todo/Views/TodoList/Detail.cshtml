@@ -19,13 +19,16 @@
             </a>
         </li>
 
-        @foreach (var item in Model.Items)
+        @foreach (var item in Model.Items.OrderBy(i => i.Importance))
         {
             string contextualClass;
             switch (item.Importance)
             {
                 case Importance.High:
                     contextualClass = "list-group-item-danger";
+                    break;
+                case Importance.Medium:
+                    contextualClass = "list-group-item-warning";
                     break;
                 case Importance.Low:
                     contextualClass = "list-group-item-info";
