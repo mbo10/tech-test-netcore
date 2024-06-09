@@ -19,9 +19,15 @@
             </a>
         </li>
 
+        <li class="list-group-item">
+            <input type="checkbox" id="hidedoneitems" /> 
+            <i>Hide done items</i>
+        </li>
+
         @foreach (var item in Model.Items.OrderBy(i => i.Importance))
         {
             string contextualClass;
+            var taskStatus = item.IsDone ? "done" : "in-progress";
             switch (item.Importance)
             {
                 case Importance.High:
@@ -38,7 +44,7 @@
                     break;
             }
 
-            <li class="list-group-item @contextualClass">
+            <li class="list-group-item @contextualClass" name=@taskStatus>
                 
                 <div class="row">
 
@@ -70,3 +76,19 @@
         }
     </ul>
 </div>
+
+@section Scripts {
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkbox = document.getElementById('hidedoneitems');
+        const items = document.querySelectorAll('.list-group [name="done"]');
+
+        checkbox.addEventListener('change', (event) => {
+            const displayStyle = event.target.checked ? 'none' : 'block';
+            items.forEach(item => {
+                item.style.display = displayStyle;
+            });
+        });
+    });
+</script>
+}

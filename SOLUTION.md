@@ -20,3 +20,10 @@
 ## Task 4
 ### Solution
 - Added a name data annotation on the ResponsiblePartyId property in both **TodoItemEditFiels.cs & TodoItemCreateFiels.cs** in order to display a friendlier text on the UI.
+
+## Task 5
+### Solution
+- Added a checkbox on the Detail page, for hiding and unhiding tasks that are marked as done.
+- Added a task status variable which checks if an item is marked as done and sets its value to "done" or "in-progress".
+- Added an attribute to the list of items, which allows me to filter the items by their status.
+- Made use of simple javascript event listeners to handle the actual hiding and unhiding of items 
