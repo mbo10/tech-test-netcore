@@ -16,3 +16,7 @@
 - Fixed a flaw in the **TodoItemEditFiels.cs** file, where the class constructor was hardcoding the importance value as a Medium rather than using the value from the **importance** parameter.
 - Fixed a flaw in the **TodoItemCreateFiels.cs** file, where the Importance property was being set to Medium by default.
 - These flaws were causing one of the tests to fail and also causing a bug in the UI of the app where if you wanted to edit a task, the importance shown would always be Medium.
+
+## Task 4
+### Solution
+- Added a name data annotation on the ResponsiblePartyId property in both **TodoItemEditFiels.cs & TodoItemCreateFiels.cs** in order to display a friendlier text on the UI.
