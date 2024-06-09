@@ -7,6 +7,12 @@
 
 ## Task 2
 ### Solution
-- Inside the foreach on the Detail.cshtml page, I used the LINQ OrderBy method on the Importance property of Items, which orders the items in an ascending order by default.
+- Inside the foreach on the **Detail.cshtml** page, I used the LINQ **OrderBy** method on the Importance property of Items, which orders the items in an ascending order by default.
 - The importance property is an enum so each value is assigned an integer starting from 0 at the first by default.
-- Noticed that there is a case missing for Medium importance which leaves it with no colour. I introduced the contextualClass "list-group-item-warning", which colours the medium importance tasks in yellow, which improves the app's intuativeness. 
+- Noticed that there is a case missing for Medium importance which leaves it with no colour. I introduced the contextual class **"list-group-item-warning"**, which colours the medium importance tasks in yellow, which improves the app's intuativeness. 
+
+## Task 3
+### Solution
+- Fixed a flaw in the **TodoItemEditFiels.cs** file, where the class constructor was hardcoding the importance value as a Medium rather than using the value from the **importance** parameter.
+- Fixed a flaw in the **TodoItemCreateFiels.cs** file, where the Importance property was being set to Medium by default.
+- These flaws were causing one of the tests to fail and also causing a bug in the UI of the app where if you wanted to edit a task, the importance shown would always be Medium.
