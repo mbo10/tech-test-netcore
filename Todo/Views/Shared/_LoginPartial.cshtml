@@ -3,6 +3,7 @@
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IGravatar gravatar
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -15,11 +16,20 @@
 
                         var iu = await UserManager.GetUserAsync(User);
                         var emailAddress = await UserManager.GetEmailAsync(iu);
-                        var gravatarhash = Gravatar.GetHash(emailAddress);
-                    }
+                        var gravatarhash = gravatar.GetHash(emailAddress);
 
-                    <img src="https://www.gravatar.com/avatar/@gravatarhash?s=30" />
-                    @UserManager.GetUserName(User)
+                        var htmlContent = await gravatar.GenerateUserHtmlAsync(emailAddress);
+
+                        if (htmlContent != "")
+                        {
+                            @Html.Raw(htmlContent)
+                        }
+                        else
+                        {
+                            <img src="https://www.gravatar.com/avatar/@gravatarhash?s=30" />
+                            @UserManager.GetUserName(User)
+                        }
+                    }
                 </a>
             </li>
             <li>

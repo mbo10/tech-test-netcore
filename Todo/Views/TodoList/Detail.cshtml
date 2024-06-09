@@ -1,10 +1,18 @@
-﻿@using Todo.Controllers
+﻿@using Microsoft.AspNetCore.Identity
+@using Todo.Controllers
 @using Todo.Data.Entities
 @using Todo.Services
 @model Todo.Models.TodoLists.TodoListDetailViewmodel
 
+@inject UserManager<IdentityUser> UserManager
+@inject IGravatar gravatar
+
 @{
     ViewData["Title"] = $"List: {Model.Title}";
+    var identityUser = await UserManager.GetUserAsync(User);
+    var emailAddress = await UserManager.GetEmailAsync(identityUser);
+    var gravatarhash = gravatar.GetHash(emailAddress);
+    var htmlContent = await gravatar.GenerateUserHtmlAsync(emailAddress);
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -100,8 +108,15 @@
 
                     <div class="col-md-3 text-right">
                         <small>
-                            @item.ResponsibleParty.UserName
-                            <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
+                            @if (htmlContent != "" && item.ResponsibleParty.Email == emailAddress)
+                            {
+                                @Html.Raw(htmlContent)
+                            }
+                            else
+                            {
+                                <img src="https://www.gravatar.com/avatar/@gravatarhash?s=30" />
+                                @item.ResponsibleParty.UserName
+                            }
                         </small>
                     </div>
 

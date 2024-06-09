@@ -47,3 +47,11 @@
 - Introduced additional input fields in the Create and Edit UI pages to allow for the setting of rank for each item in a list.
 - Introduced a boolean property which indicates wether a list is sorted by rank or not and used it to drive the logic behind sorting the lists.
 - Displayed the option to sort by Importance or Rank via radiobuttons on the UI
+
+## Task 8
+### Solution
+- Extended the Gravatar service by making it non-static and introducing a Gravatar Interface to enable me to use the service as a Singleton and inject it where needed.
+- Added a new method to the Gravatar service, called **GetInfoAsync**. It performs an API call(GET) to the Gravatar endpoint, which responds with the current user details. I then return said details as an object, which I created, called **ProfileInfo**.
+- Introduced another method to the Gravatar service, called **GenerateUserHtmlAsync** which makes use of the **GetInfoAsync** method and returns html elements.
+- Refactored the Login and Detail pages to use the **GenerateUserHtmlAsync** method for getting user information.
+- Added an extra check on the Detail page to check if the Assignee's email equals that of the current user, which prevents a bug in To-Do lists where I'm not the owner, but only an Assignee.
