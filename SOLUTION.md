@@ -33,3 +33,12 @@
 - Introduced the functionality to allow a user to see any to-do lists in which they have at least a single task assigned to them.
 - Added an additional condition to the filter, which is responsible for loading the relevant to-do lists for a user, in **ApplicationDbContextConvenience.cs**.
 - The condition checks if the responsible party id for any to-do item is equal to the user id of the owner of the current to-do list.
+
+## Task 7
+### Solution
+#### *Part - 1*
+- Added a Rank property of type integer to the TodoItem class.
+- Built the solution and solved the expected build failures by introducing the new property to the relevant models and model mappers.
+- Fixed the now failing tests
+- Introduced an additional test to test the creation of a to-do item with a rank
+- Added a new database migration and updated the database
