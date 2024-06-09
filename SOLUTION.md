@@ -27,3 +27,9 @@
 - Added a task status variable which checks if an item is marked as done and sets its value to "done" or "in-progress".
 - Added an attribute to the list of items, which allows me to filter the items by their status.
 - Made use of simple javascript event listeners to handle the actual hiding and unhiding of items 
+
+## Task 6
+### Solution
+- Introduced the functionality to allow a user to see any to-do lists in which they have at least a single task assigned to them.
+- Added an additional condition to the filter, which is responsible for loading the relevant to-do lists for a user, in **ApplicationDbContextConvenience.cs**.
+- The condition checks if the responsible party id for any to-do item is equal to the user id of the owner of the current to-do list.
