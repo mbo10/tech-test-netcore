@@ -20,14 +20,50 @@
         </li>
 
         <li class="list-group-item">
-            <input type="checkbox" id="hidedoneitems" /> 
-            <i>Hide done items</i>
+            <div class="row">
+                <div class="col-md-8">
+                    <input type="checkbox" id="hidedoneitems" />
+                    <i style="font-size: small;">Hide done items</i>
+                </div>
+                <div class="col-md-4 text-right">
+                    <form method="get" asp-action="Detail" asp-controller="TodoList">
+                        @Html.HiddenFor(x => x.TodoListId)
+                        Sort by: <br />
+                        <label>
+                            <i style="font-size: x-small;">Importance</i>
+                            @Html.RadioButtonFor(x => x.SortedByRank, false, new { onchange = "this.form.submit()" })
+                        </label>
+                        <br />
+
+                        <label>
+                            <i style="font-size: x-small;">Rank</i>
+                            @Html.RadioButtonFor(x => x.SortedByRank, true, new { onchange = "this.form.submit()" })
+                        </label>
+                        <br />
+                    </form>
+                </div>
+            </div>
         </li>
 
-        @foreach (var item in Model.Items.OrderBy(i => i.Importance))
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-md-6">
+                    <h7>Task Name</h7>
+                </div>
+                <div class="col-md-3 text-right">
+                    <h7>Assignee</h7>
+                </div>
+                <div class="col-md-3 text-right">
+                    <h7>Rank</h7>
+                </div>
+            </div>
+        </li>
+
+        @foreach (var item in Model.Items)
         {
             string contextualClass;
             var taskStatus = item.IsDone ? "done" : "in-progress";
+
             switch (item.Importance)
             {
                 case Importance.High:
@@ -48,28 +84,32 @@
                 
                 <div class="row">
 
-                <div class="col-md-8">
-                    <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
+                    <div class="col-md-6">
+                        <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
 
-                        @if (item.IsDone)
-                        {
-                            <s>@item.Title</s>
-                        }
-                        else
-                        {
-                            <text>@item.Title</text>
-                        }
-                    </a>
-                </div>
+                            @if (item.IsDone)
+                            {
+                                <s>@item.Title</s>
+                            }
+                            else
+                            {
+                                <text>@item.Title</text>
+                            }
+                        </a>
+                    </div>
 
-                <div class="col-md-4 text-right">
-                    <small>
-                        @item.ResponsibleParty.UserName
+                    <div class="col-md-3 text-right">
+                        <small>
+                            @item.ResponsibleParty.UserName
+                            <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
+                        </small>
+                    </div>
 
-                        <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
-
-                    </small>
-                </div>
+                    <div class="col-md-3 text-right">
+                        <span>
+                            @item.Rank
+                        </span>
+                    </div>
                 </div>
 
             </li>

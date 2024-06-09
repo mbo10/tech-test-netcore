@@ -41,4 +41,9 @@
 - Built the solution and solved the expected build failures by introducing the new property to the relevant models and model mappers.
 - Fixed the now failing tests
 - Introduced an additional test to test the creation of a to-do item with a rank
+- Installed EntityFramework Core Tools NuGet package
 - Added a new database migration and updated the database
+#### *Part - 2*
+- Introduced additional input fields in the Create and Edit UI pages to allow for the setting of rank for each item in a list.
+- Introduced a boolean property which indicates wether a list is sorted by rank or not and used it to drive the logic behind sorting the lists.
+- Displayed the option to sort by Importance or Rank via radiobuttons on the UI
