@@ -65,3 +65,10 @@
 - I've introduced a JavaScript function **addFormSubmitHandler()**, which gets triggered from within the create button event listener, that sends an HTTP POST request to the Create() method of the TodoItemController, which then creates and saves the new item.
 #### TO-DO
 - The scripts section at the bottom of the **Detail.cshtml** has grown along with the progress of the tasks and it would be beneficial for it to be extracted in a separate **.js** file.
+
+## Task 10
+### Solution
+- Created a new endpoint on the TodoItemController, which takes in two parameters (new item rank and the id of the item) and updates item rank. 
+- When hit with the two parameters, the endpoint runs a DB method, which applies the new rank on the given item to the database.
+- I added up and down buttons on each task in the UI, used for setting the rank value for each Todo Item.
+- I added JavaScript logic to hit the new endpoint and send an HTTP POST request with the new rank and the item id to the API.

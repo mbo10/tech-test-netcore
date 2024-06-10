@@ -126,8 +126,14 @@
                             @item.Rank
                         </span>
                     </div>
-                </div>
 
+                    <div class="col-md-3 text-right">
+                        <span>
+                            <button id="upButton" class="upButton btn btn-xs" data-item-id="@item.TodoItemId" data-rank="@item.Rank">Up</button>
+                            <button id="downButton" class="downButton btn btn-xs" data-item-id="@item.TodoItemId" data-rank="@item.Rank">Down</button>
+                        </span>
+                    </div>
+                </div>
             </li>
         }
     </ul>
@@ -147,6 +153,58 @@
                 const displayStyle = event.target.checked ? 'none' : 'block';
                 items.forEach(item => {
                     item.style.display = displayStyle;
+                });
+            });
+
+            const upButtons = document.querySelectorAll('.upButton');
+            upButtons.forEach(button => {
+                button.addEventListener('click', async () => {
+
+                    const currentRank = button.getAttribute('data-rank');
+                    let newRank = parseInt(currentRank) + 1;
+                    const todoItemId = button.getAttribute('data-item-id');
+                    let itemId = parseInt(todoItemId);
+                    const url = `@Url.Action("ChangeRank", "TodoItem")?newRank=${newRank}&todoItemId=${todoItemId}`;
+
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        if (!response.ok) throw new Error('Network response was not ok.');
+                        const data = await response.text();
+                    } catch (error) {
+                        console.error('Error updating rank:', error);
+                    }
+                    location.reload();
+                });
+            });
+
+            const downButtons = document.querySelectorAll('.downButton');
+            downButtons.forEach(button => {
+                button.addEventListener('click', async () => {
+
+                    const currentRank = button.getAttribute('data-rank');
+                    let newRank = parseInt(currentRank) - 1;
+                    const todoItemId = button.getAttribute('data-item-id');
+                    let itemId = parseInt(todoItemId);
+                    const url = `@Url.Action("ChangeRank", "TodoItem")?newRank=${newRank}&todoItemId=${todoItemId}`;
+
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        if (!response.ok) throw new Error('Network response was not ok.');
+                        const data = await response.text();
+                    } catch (error) {
+                        console.error('Error updating rank:', error);
+                    }
+                    location.reload();
                 });
             });
 
@@ -194,6 +252,6 @@
                     }
                 });
             }
-    });
+        });
     </script>
 }

@@ -26,6 +26,11 @@ namespace Todo.Controllers
             var fields = TodoItemCreateFieldsFactory.Create(todoList, User.Id());
             return View(fields);
         }
+        [HttpPost]
+        public void ChangeRank(int newRank, int todoItemId)
+        {
+            dbContext.UpdateRank(newRank, todoItemId);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

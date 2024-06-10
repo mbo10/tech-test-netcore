@@ -32,5 +32,20 @@ namespace Todo.Services
         {
             return dbContext.TodoItems.Include(ti => ti.TodoList).Single(ti => ti.TodoItemId == todoItemId);
         }
+
+        public static bool UpdateRank(this ApplicationDbContext dbContext, int newRank, int todoItemId)
+        {
+            TodoItem item = dbContext.SingleTodoItem(todoItemId);
+            if (item == null)
+            {
+                return false;
+            }
+
+            item.Rank = newRank;
+
+            dbContext.Update(item);
+            dbContext.SaveChanges();
+            return true;
+        }
     }
 }
