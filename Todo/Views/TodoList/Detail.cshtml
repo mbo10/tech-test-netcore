@@ -22,9 +22,10 @@
     <ul class="list-group">
 
         <li class="list-group-item">
-            <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
-                <strong>Add New Item</strong>
-            </a>
+                <div class="row">
+                    <div id="partialViewContainer" style="margin: 10px"></div>
+                <button id="createButton" class="btn btn-primary" style="margin-left: 10px;margin-right: 10px;" data-todo-list-id="@Model.TodoListId">Create New Item</button>
+                </div>
         </li>
 
         <li class="list-group-item">
@@ -133,17 +134,66 @@
 </div>
 
 @section Scripts {
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const checkbox = document.getElementById('hidedoneitems');
-        const items = document.querySelectorAll('.list-group [name="done"]');
-
-        checkbox.addEventListener('change', (event) => {
-            const displayStyle = event.target.checked ? 'none' : 'block';
-            items.forEach(item => {
-                item.style.display = displayStyle;
-            });
+    <script>
+        document.getElementById("createButton").addEventListener("click", function () {
+        this.disabled = true;
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkbox = document.getElementById('hidedoneitems');
+            const items = document.querySelectorAll('.list-group [name="done"]');
+
+            checkbox.addEventListener('change', (event) => {
+                const displayStyle = event.target.checked ? 'none' : 'block';
+                items.forEach(item => {
+                    item.style.display = displayStyle;
+                });
+            });
+
+            const createButton = document.getElementById('createButton');
+            const partialViewContainer = document.getElementById('partialViewContainer');
+
+            createButton.addEventListener('click', async () => {
+                const todoListId = createButton.getAttribute('data-todo-list-id');
+                const url = `@Url.Action("GetDetailPartialView", "TodoItem")?todoListId=${todoListId}`;
+
+                try 
+                {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error('Network response was not ok.');
+                    const data = await response.text();
+                    partialViewContainer.innerHTML = data;
+                    addFormSubmitHandler();
+                } catch (error) {
+                    console.error('Error fetching partial view:', error);
+                }
+            });
+
+            function addFormSubmitHandler() {
+                const createItemForm = document.getElementById('createItemForm');
+                createItemForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    const formData = new FormData(createItemForm);
+                    const url = createItemForm.action;
+                    const method = createItemForm.method;
+
+                    try {
+                        const response = await post(url, {
+                            method: method,
+                            body: formData,
+                        });
+
+                        if (!response.ok) {
+                            const errorText = await response.text();
+                            throw new Error(`HTTP error! status: ${response.status}, details: ${errorText}`);
+                        }
+
+                    } catch (error) {
+                        console.error('Error submitting form:', error);
+                    }
+                });
+            }
     });
-</script>
+    </script>
 }

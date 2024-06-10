@@ -55,3 +55,13 @@
 - Introduced another method to the Gravatar service, called **GenerateUserHtmlAsync** which makes use of the **GetInfoAsync** method and returns html elements.
 - Refactored the Login and Detail pages to use the **GenerateUserHtmlAsync** method for getting user information.
 - Added an extra check on the Detail page to check if the Assignee's email equals that of the current user, which prevents a bug in To-Do lists where I'm not the owner, but only an Assignee.
+
+## Task 9
+### Solution
+- Refactored the UI so that the creation of new To-do items happens on the Details page instead of being redirected to an isolated page just for the purpose of creation of a new item.
+- I extracted a partial view based on the existing Create page and named it after the location at which it will be rendered.(DetailPartial)
+- I added a button on the Detail page, which upon being clicked, reveals a form for the creation of a new item on the current list. Upon being clicked the Creation button gets disabled until the form is saved. This is to prevent accidental clicks on it, while an item is in-process of being created.
+- I've added a JavaScript event listener method on the Creation button, responding to a click, by performing an HTTP GET on the **GetDetailPartialView** method in the TodoItemController.
+- I've introduced a JavaScript function **addFormSubmitHandler()**, which gets triggered from within the create button event listener, that sends an HTTP POST request to the Create() method of the TodoItemController, which then creates and saves the new item.
+#### TO-DO
+- The scripts section at the bottom of the **Detail.cshtml** has grown along with the progress of the tasks and it would be beneficial for it to be extracted in a separate **.js** file.

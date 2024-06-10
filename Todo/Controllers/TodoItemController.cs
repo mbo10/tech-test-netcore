@@ -65,6 +65,19 @@ namespace Todo.Controllers
             return RedirectToListDetail(todoItem.TodoListId);
         }
 
+        [HttpGet]
+        public IActionResult GetDetailPartialView(int todoListId)
+        {
+            var model = GetModel(todoListId);
+            return PartialView("_DetailPartial", model);
+        }
+
+        private TodoItemCreateFields GetModel(int todoListId)
+        {
+            var todoList = dbContext.SingleTodoList(todoListId);
+            return TodoItemCreateFieldsFactory.Create(todoList, User.Id());
+        }
+
         private RedirectToActionResult RedirectToListDetail(int fieldsTodoListId)
         {
             return RedirectToAction("Detail", "TodoList", new {todoListId = fieldsTodoListId});
