@@ -72,3 +72,9 @@
 - When hit with the two parameters, the endpoint runs a DB method, which applies the new rank on the given item to the database.
 - I added up and down buttons on each task in the UI, used for setting the rank value for each Todo Item.
 - I added JavaScript logic to hit the new endpoint and send an HTTP POST request with the new rank and the item id to the API.
+## GENERAL TO-DO
+- There are still unit tests to be written for the app. I was planning on writing them, using Moq and xUnit, but I ran out of time.
+- The logic around the Gravatar service could be refactored to be more robust
+- Javascript section should be extracted in a separate file.
+- Styling could be added for a better UI experience.
+- Point for performance improvements would be the implementation of a listener that would reflect changes between Server and UI dynamically instead of reloading the page.
